@@ -5,8 +5,7 @@ import EvaluationPanel from './components/EvaluationPanel.jsx'
 import DataTable from './components/DataTable.jsx'
 import axios from 'axios'
 
-const API = 'http://localhost:8000'
-
+const API = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
 const NAV = ['Generate', 'Evaluation', 'Data Preview', 'Real Data Info']
 
 export default function App() {
