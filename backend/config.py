@@ -7,8 +7,11 @@ class Settings(BaseSettings):
     default_epsilon: float = 1.0
     default_delta: float = 1e-5
     model_save_path: str = "./saved_models"
-    cors_origins: list = ["http://localhost:5173", "http://localhost:3000"]
-
+cors_origins: list = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://synthetic-healthcare-data.vercel.app",
+]
     class Config:
         env_file = ".env"
 
