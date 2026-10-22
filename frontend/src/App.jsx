@@ -16,4 +16,5 @@ const handleDownload = () => {
   link.click()
   link.remove()
   URL.revokeObjectURL(url)
+  export default App
 }
