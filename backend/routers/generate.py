@@ -39,6 +39,7 @@ async def generate_synthetic_data(request: GenerateRequest):
 
         # 5. Build preview (first 10 rows, serializable)
         preview = synthetic_df.head(10).fillna("").astype(str).to_dict(orient="records")
+        csv_data = synthetic_df.to_csv(index=False)
 
         return GenerateResponse(
             success=True,
@@ -48,6 +49,8 @@ async def generate_synthetic_data(request: GenerateRequest):
             preview=preview,
             evaluation=eval_result,
             generation_time_seconds=round(gen_time, 2),
+            csv_data=csv_data,
+
         )
 
     except Exception as e:
