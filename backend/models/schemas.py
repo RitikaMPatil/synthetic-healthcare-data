@@ -1,3 +1,4 @@
+
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from enum import Enum
@@ -15,15 +16,17 @@ class PrivacyMechanism(str, Enum):
     K_ANONYMITY = "k_anonymity"
 
 
-class GenerateResponse(BaseModel):
-    success: bool
-    message: str
-    rows_generated: int
-    columns: List[str]
-    preview: List[Dict[str, Any]]
-    evaluation: Optional[EvaluationResult] = None
-    generation_time_seconds: float
-    csv_data: str
+class GenerateRequest(BaseModel):
+    num_rows: int = Field(default=500, ge=10, le=10000)
+    generator_type: GeneratorType = Field(default=GeneratorType.CTGAN)
+    privacy_mechanism: PrivacyMechanism = Field(
+        default=PrivacyMechanism.DIFFERENTIAL_PRIVACY
+    )
+    epsilon: float = Field(default=1.0, ge=0.01, le=10.0)
+    delta: float = Field(default=1e-5)
+    k_anonymity_k: int = Field(default=5, ge=2, le=50)
+    epochs: int = Field(default=300, ge=50, le=1000)
+    batch_size: int = Field(default=500, ge=64, le=2048)
 
 
 class EvaluationResult(BaseModel):
@@ -43,6 +46,7 @@ class GenerateResponse(BaseModel):
     preview: List[Dict[str, Any]]
     evaluation: Optional[EvaluationResult] = None
     generation_time_seconds: float
+    csv_data: str
 
 
 class ColumnStats(BaseModel):
